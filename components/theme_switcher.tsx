@@ -18,20 +18,20 @@ export function ThemeToggle() {
   ];
 
   return (
-    <div className="flex items-center gap-1 rounded-full bg-muted p-1 w-max">
+    <div className="flex items-center gap-0.5 rounded-lg border border-border/60 bg-background p-0.5">
       {options.map(({ value, icon: Icon, label }) => (
         <button
           key={value}
           onClick={() => setTheme(value)}
           aria-label={label}
-          className={`flex h-8 w-8 items-center justify-center rounded-full transition-colors cursor-pointer
+          className={`flex h-7 w-7 items-center justify-center rounded-md transition-all cursor-pointer
             ${
               theme === value
-                ? "bg-background text-foreground shadow"
-                : "text-muted-foreground hover:bg-background/50"
+                ? "bg-primary/15 text-primary shadow-sm"
+                : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
             }`}
         >
-          <Icon className="h-4 w-4" />
+          <Icon className="h-3.5 w-3.5" />
         </button>
       ))}
     </div>
