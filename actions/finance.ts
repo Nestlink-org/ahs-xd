@@ -29,7 +29,7 @@ async function requireFinanceAccess() {
   const session = await getSession();
   if (
     !session ||
-    !["superadmin", "admin", "finance", "sales"].includes(session.role)
+    !["superadmin", "admin", "finance", "sales", "ops"].includes(session.role)
   ) {
     throw new Error("Unauthorized");
   }
@@ -153,6 +153,13 @@ export async function addTransaction(
     });
 
     revalidatePath("/dashboard/finance");
+
+    // Broadcast notification to all relevant users
+    const { notifyTransactionAdded } = await import("@/actions/notifications");
+    notifyTransactionAdded(session.email, type, amount, category, wallet).catch(
+      () => {},
+    );
+
     return { success: true, message: "Transaction added successfully." };
   } catch (err: unknown) {
     if (err instanceof Error && err.message === "Unauthorized") {
@@ -206,8 +213,11 @@ export async function transferToProfit(
 ): Promise<ActionResult> {
   try {
     const session = await requireFinanceAccess();
-    if (!["superadmin", "admin"].includes(session.role)) {
-      return { success: false, message: "Only admins can transfer funds." };
+    if (!["superadmin", "finance"].includes(session.role)) {
+      return {
+        success: false,
+        message: "Only Finance role can transfer funds.",
+      };
     }
 
     const amount = parseFloat(formData.get("amount") as string);
@@ -243,6 +253,10 @@ export async function transferToProfit(
     });
 
     revalidatePath("/dashboard/finance");
+
+    const { notifyTransfer } = await import("@/actions/notifications");
+    notifyTransfer(session.email, amount).catch(() => {});
+
     return {
       success: true,
       message: `Transferred ${amount.toLocaleString()} to Profit Wallet.`,
@@ -264,7 +278,9 @@ export async function getFinanceData(
   const session = await getSession();
   if (
     !session ||
-    !["superadmin", "admin", "finance", "sales"].includes(session.role)
+    !["superadmin", "admin", "finance", "sales", "ops", "viewer"].includes(
+      session.role,
+    )
   ) {
     throw new Error("Unauthorized");
   }
@@ -397,6 +413,17 @@ export async function getFinanceData(
   const runway = primaryBalance / monthlyBurn;
 
   const alerts = await computeAlerts(primaryBalance, revenue, expenses, cfg);
+
+  // Push notifications every 30min while conditions persist
+  const { triggerFinanceNotifications } =
+    await import("@/actions/notifications");
+  triggerFinanceNotifications(
+    session.userId,
+    primaryBalance,
+    revenue,
+    expenses,
+    cfg,
+  ).catch(() => {});
 
   return JSON.parse(
     JSON.stringify({

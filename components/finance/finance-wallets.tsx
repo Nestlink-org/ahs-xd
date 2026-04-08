@@ -8,9 +8,11 @@ function fmt(n: number, currency = "KES") {
 export function FinanceWallets({
   data,
   canAdmin,
+  canTransfer = false,
 }: {
   data: any;
   canAdmin: boolean;
+  canTransfer?: boolean;
 }) {
   const { kpi, config, transactions } = data;
 
@@ -25,7 +27,7 @@ export function FinanceWallets({
     <div className="flex flex-col gap-8">
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
-          <h1 className="text-2xl font-semibold">Wallets</h1>
+          <h1 className="text-2xl font-semibold font-realce">Wallets</h1>
           <p className="text-sm text-muted-foreground mt-1">
             Balances, transfers and recent activity
           </p>
@@ -45,7 +47,7 @@ export function FinanceWallets({
         primaryGauge={kpi.primaryGauge}
         profitGauge={kpi.profitGauge}
         currency={config.currency}
-        canTransfer={canAdmin}
+        canTransfer={canTransfer}
       />
 
       {/* Recent activity per wallet */}

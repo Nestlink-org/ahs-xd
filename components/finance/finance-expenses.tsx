@@ -15,7 +15,7 @@ export function FinanceExpenses({
     <div className="flex flex-col gap-8">
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
-          <h1 className="text-2xl font-semibold">Expenses</h1>
+          <h1 className="text-2xl font-semibold font-realce">Expenses</h1>
           <p className="text-sm text-muted-foreground mt-1">
             All transactions · filter, search and manage
           </p>

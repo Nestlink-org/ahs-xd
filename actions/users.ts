@@ -74,6 +74,10 @@ export async function createUser(
     );
 
     revalidatePath("/dashboard/superadmin");
+
+    const { notifyUserCreated } = await import("@/actions/notifications");
+    notifyUserCreated(email, role).catch(() => {});
+
     return { success: true, message: `User ${email} created successfully.` };
   } catch (err: unknown) {
     if (err instanceof Error && err.message === "Unauthorized") {

@@ -13,7 +13,7 @@ export default async function SuperAdminPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-semibold text-foreground">
+        <h1 className="text-2xl font-semibold text-foreground font-realce">
           User Management
         </h1>
         <p className="text-sm text-muted-foreground mt-1">

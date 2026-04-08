@@ -15,6 +15,7 @@ import {
   Menu,
   TrendingDown,
   Landmark,
+  Zap,
 } from "lucide-react";
 import {
   SidebarProvider,
@@ -33,6 +34,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "@/components/theme_switcher";
 import { Greeting } from "@/components/dashboard/greeting";
+import { NotificationBell } from "@/components/notifications/notification-bell";
 import type { SessionPayload } from "@/lib/session";
 import { logoutAction } from "@/actions/auth";
 
@@ -102,12 +104,8 @@ const NAV_BY_ROLE: Record<string, NavItem[]> = {
   ],
   ops: [
     { href: "/dashboard/ops", label: "Overview", icon: LayoutDashboard },
-    {
-      href: "/dashboard/ops?tab=expenses",
-      label: "Expenses",
-      icon: TrendingDown,
-    },
-    { href: "/dashboard/ops?tab=wallets", label: "Wallets", icon: Landmark },
+    { href: "/dashboard/ops?tab=execution", label: "Execution", icon: Zap },
+    { href: "/dashboard/ops?tab=deals", label: "Deals", icon: GitBranch },
   ],
   sales: [
     { href: "/dashboard/sales", label: "Overview", icon: LayoutDashboard },
@@ -258,7 +256,10 @@ export function DashboardShell({
                 <Greeting name={session.name} />
               </div>
             </div>
-            <ThemeToggle />
+            <div className="flex items-center gap-2">
+              <NotificationBell />
+              <ThemeToggle />
+            </div>
           </header>
 
           <main className="flex-1 p-4 md:p-6 overflow-auto">{children}</main>

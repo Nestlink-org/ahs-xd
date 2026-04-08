@@ -22,13 +22,26 @@ export default async function FinancePage({
 
   const { tab = "overview" } = await searchParams;
   const data = await getFinanceData("month");
-  const canAdmin = ["superadmin", "admin"].includes(session.role);
+  const canAdmin = ["superadmin", "admin", "finance"].includes(session.role);
+  const canTransfer = ["superadmin", "finance"].includes(session.role);
 
   if (tab === "expenses") {
     return <FinanceExpenses data={data} canAdmin={canAdmin} />;
   }
   if (tab === "wallets") {
-    return <FinanceWallets data={data} canAdmin={canAdmin} />;
+    return (
+      <FinanceWallets
+        data={data}
+        canAdmin={canAdmin}
+        canTransfer={canTransfer}
+      />
+    );
   }
-  return <FinanceOverview data={data} canAdmin={canAdmin} />;
+  return (
+    <FinanceOverview
+      data={data}
+      canAdmin={canAdmin}
+      canTransfer={canTransfer}
+    />
+  );
 }

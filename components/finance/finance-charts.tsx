@@ -138,10 +138,11 @@ function RevenueExpenseChart({
     range === "3m" ? trend.slice(-3) : range === "6m" ? trend.slice(-6) : trend;
 
   const tooltipStyle = {
-    background: "var(--card)",
+    backgroundColor: "var(--card)",
     border: "1px solid var(--border)",
     borderRadius: 10,
     fontSize: 12,
+    boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
   };
 
   const axisProps = {
@@ -447,10 +448,11 @@ function DonutChart({
                   "",
                 ]}
                 contentStyle={{
-                  background: "var(--card)",
+                  backgroundColor: "var(--card)",
                   border: "1px solid var(--border)",
                   borderRadius: 10,
                   fontSize: 12,
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
                 }}
               />
             </PieChart>
