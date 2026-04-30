@@ -31,7 +31,7 @@ export default async function OpsDashboard({
   const [execStats, opsStats, financeData] = await Promise.all([
     getExecutionStats(),
     getOpsStats(),
-    getFinanceData("month"),
+    getFinanceData("all"),
   ]);
 
   if (tab === "execution") {

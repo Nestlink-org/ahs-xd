@@ -92,8 +92,8 @@ const NAV_BY_ROLE: Record<string, NavItem[]> = {
       icon: TrendingDown,
     },
     { href: "/dashboard/ceo?tab=wallets", label: "Wallets", icon: Landmark },
-    { href: "/dashboard/xddrive", label: "XDDrive", icon: HardDrive },
-    { href: "/dashboard/xdmails", label: "XDMailer", icon: Mail },
+    { href: "/dashboard/ceo?tab=xddrive", label: "XDDrive", icon: HardDrive },
+    { href: "/dashboard/xdmails", label: "XDMails", icon: Mail },
   ],
   finance: [
     { href: "/dashboard/finance", label: "Overview", icon: Wallet },

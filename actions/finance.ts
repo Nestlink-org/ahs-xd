@@ -273,7 +273,7 @@ export async function transferToProfit(
 // ─── Get finance dashboard data ───────────────────────────────────────────────
 
 export async function getFinanceData(
-  period: "month" | "quarter" | "year" = "month",
+  period: "month" | "quarter" | "year" | "all" = "all",
 ) {
   const session = await getSession();
   if (
@@ -290,7 +290,11 @@ export async function getFinanceData(
   // Period boundaries
   const now = new Date();
   const start = new Date(now);
-  if (period === "month") {
+  if (period === "all") {
+    // All-time: start from epoch
+    start.setFullYear(2000, 0, 1);
+    start.setHours(0, 0, 0, 0);
+  } else if (period === "month") {
     start.setDate(1);
     start.setHours(0, 0, 0, 0);
   } else if (period === "quarter") {
@@ -302,10 +306,16 @@ export async function getFinanceData(
     start.setHours(0, 0, 0, 0);
   }
 
+  // Current month boundaries for Monthly Burn calculation
+  const monthStart = new Date(now);
+  monthStart.setDate(1);
+  monthStart.setHours(0, 0, 0, 0);
+
   const [
     wallets,
     config,
     periodStats,
+    currentMonthExpenses,
     recentTx,
     monthlyTrend,
     categoryBreakdown,
@@ -322,6 +332,12 @@ export async function getFinanceData(
     Transaction.aggregate([
       { $match: { date: { $gte: start, $lte: now } } },
       { $group: { _id: "$type", total: { $sum: "$amount" } } },
+    ]),
+
+    // Current month expenses only (for Monthly Burn)
+    Transaction.aggregate([
+      { $match: { type: "expense", date: { $gte: monthStart, $lte: now } } },
+      { $group: { _id: null, total: { $sum: "$amount" } } },
     ]),
 
     // Recent 50 transactions
@@ -386,6 +402,10 @@ export async function getFinanceData(
     wallets.find((w) => w.type === "primary")?.balance ?? 0;
   const profitBalance = wallets.find((w) => w.type === "profit")?.balance ?? 0;
 
+  // Monthly Burn: current month expenses only
+  const monthlyBurn = currentMonthExpenses[0]?.total ?? 0;
+  const runway = monthlyBurn > 0 ? primaryBalance / monthlyBurn : Infinity;
+
   // Gauge data: total in vs total out per wallet (all-time)
   function walletGauge(walletType: string) {
     const totalIn =
@@ -407,10 +427,6 @@ export async function getFinanceData(
     revenueTarget: 100000,
     currency: "KES",
   };
-
-  const monthsInPeriod = period === "month" ? 1 : period === "quarter" ? 3 : 12;
-  const monthlyBurn = expenses / monthsInPeriod || 1;
-  const runway = primaryBalance / monthlyBurn;
 
   const alerts = await computeAlerts(primaryBalance, revenue, expenses, cfg);
 

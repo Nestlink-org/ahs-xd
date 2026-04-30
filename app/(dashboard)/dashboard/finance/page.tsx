@@ -21,7 +21,7 @@ export default async function FinancePage({
   }
 
   const { tab = "overview" } = await searchParams;
-  const data = await getFinanceData("month");
+  const data = await getFinanceData("all");
   const canAdmin = ["superadmin", "admin", "finance"].includes(session.role);
   const canTransfer = ["superadmin", "finance"].includes(session.role);
 

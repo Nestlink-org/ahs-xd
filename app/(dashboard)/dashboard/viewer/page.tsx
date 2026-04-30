@@ -16,7 +16,7 @@ export default async function ViewerDashboard({
   if (!session) redirect("/login");
 
   const { tab = "overview" } = await searchParams;
-  const data = await getFinanceData("month");
+  const data = await getFinanceData("all");
 
   if (tab === "expenses")
     return <FinanceExpenses data={data} canAdmin={false} />;

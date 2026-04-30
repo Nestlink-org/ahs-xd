@@ -443,9 +443,9 @@ function DonutChart({
                 ))}
               </Pie>
               <Tooltip
-                formatter={(v) => [
+                formatter={(v, name) => [
                   `${currency} ${Number(v).toLocaleString()}`,
-                  "",
+                  name,
                 ]}
                 contentStyle={{
                   backgroundColor: "var(--card)",
@@ -457,8 +457,8 @@ function DonutChart({
               />
             </PieChart>
           </ResponsiveContainer>
-          <div className="flex flex-col gap-1.5">
-            {data.slice(0, 5).map((c, i) => (
+          <div className="flex flex-col gap-1.5 max-h-24 overflow-y-auto pr-2 custom-scrollbar">
+            {data.map((c, i) => (
               <div
                 key={c._id}
                 className="flex items-center justify-between text-xs"

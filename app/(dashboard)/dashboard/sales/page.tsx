@@ -18,7 +18,7 @@ export default async function SalesDashboard({
   }
 
   const { tab = "overview" } = await searchParams;
-  const data = await getFinanceData("month");
+  const data = await getFinanceData("all");
 
   if (tab === "expenses")
     return <FinanceExpenses data={data} canAdmin={false} />;
