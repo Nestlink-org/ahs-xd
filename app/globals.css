@@ -223,3 +223,88 @@
     color: transparent;
   }
 }
+
+/* Tiptap Editor Styles */
+.ProseMirror {
+  @apply focus:outline-none;
+}
+
+.ProseMirror p {
+  @apply my-2;
+}
+
+.ProseMirror h1 {
+  @apply text-2xl font-bold my-4;
+}
+
+.ProseMirror h2 {
+  @apply text-xl font-bold my-3;
+}
+
+.ProseMirror h3 {
+  @apply text-lg font-bold my-2;
+}
+
+.ProseMirror ul {
+  @apply list-disc pl-6 my-2;
+}
+
+.ProseMirror ol {
+  @apply list-decimal pl-6 my-2;
+}
+
+.ProseMirror a {
+  @apply text-primary underline cursor-pointer;
+}
+
+.ProseMirror img {
+  @apply max-w-full h-auto rounded-lg my-2;
+  max-width: 600px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ProseMirror video {
+  @apply max-w-full h-auto rounded-lg my-2;
+  max-width: 600px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ProseMirror strong {
+  @apply font-bold;
+}
+
+.ProseMirror em {
+  @apply italic;
+}
+
+.ProseMirror s {
+  @apply line-through;
+}
+
+.ProseMirror code {
+  @apply bg-muted px-1 py-0.5 rounded text-sm font-mono;
+}
+
+.ProseMirror pre {
+  @apply bg-muted p-4 rounded-lg my-2 overflow-x-auto;
+}
+
+.ProseMirror blockquote {
+  @apply border-l-4 border-border pl-4 my-2 italic;
+}
+
+.ProseMirror hr {
+  @apply border-border my-4;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  @apply text-muted-foreground;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}

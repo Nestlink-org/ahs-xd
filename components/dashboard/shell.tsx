@@ -16,6 +16,7 @@ import {
   TrendingDown,
   Landmark,
   Zap,
+  Mail,
 } from "lucide-react";
 import {
   SidebarProvider,
@@ -78,6 +79,7 @@ const NAV_BY_ROLE: Record<string, NavItem[]> = {
       icon: Landmark,
     },
     { href: "/dashboard/ops", label: "Operations", icon: Settings2 },
+    { href: "/dashboard/xdmails", label: "XDMails", icon: Mail },
     { href: "/dashboard/sales", label: "Sales", icon: GitBranch },
   ],
   admin: [
@@ -88,6 +90,7 @@ const NAV_BY_ROLE: Record<string, NavItem[]> = {
       icon: TrendingDown,
     },
     { href: "/dashboard/ceo?tab=wallets", label: "Wallets", icon: Landmark },
+    { href: "/dashboard/xdmails", label: "XDMails", icon: Mail },
   ],
   finance: [
     { href: "/dashboard/finance", label: "Overview", icon: Wallet },
@@ -106,6 +109,7 @@ const NAV_BY_ROLE: Record<string, NavItem[]> = {
     { href: "/dashboard/ops", label: "Overview", icon: LayoutDashboard },
     { href: "/dashboard/ops?tab=execution", label: "Execution", icon: Zap },
     { href: "/dashboard/ops?tab=deals", label: "Deals", icon: GitBranch },
+    { href: "/dashboard/xdmails", label: "XDMails", icon: Mail },
   ],
   sales: [
     { href: "/dashboard/sales", label: "Overview", icon: LayoutDashboard },

@@ -22,6 +22,7 @@ export const ROLE_ALLOWED_ROUTES: Record<string, UserRole[]> = {
   "/dashboard/ceo": ["superadmin", "admin"],
   "/dashboard/finance": ["superadmin", "admin", "finance", "sales"],
   "/dashboard/ops": ["superadmin", "admin", "ops"],
+  "/dashboard/xdmails": ["superadmin", "admin", "ops"],
   "/dashboard/sales": ["superadmin", "admin", "sales"],
   "/dashboard/viewer": [
     "superadmin",
