@@ -24,7 +24,7 @@ export default async function XDMailsPage({
       <Toaster position="top-right" richColors />
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
-          <h1 className="text-2xl font-semibold font-realce">XDMails</h1>
+          <h1 className="text-2xl font-semibold font-realce">XDMailer</h1>
           <p className="text-sm text-muted-foreground mt-1">
             Bulk email campaigns for marketing and outreach
           </p>
